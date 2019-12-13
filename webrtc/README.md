@@ -15,7 +15,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
 - 2018/07,发布v1.0.0,[发布说明](/release)
   - 了解v1.0.0的[官方文档](/webrtc/v1.0.0-001.md)
   - 了解v1.0.0的[pkg/errors](/webrtc/v1.0.0-002.md)
-  - 了解v1.0.0的[ice](/webrtc/v1.0.0-003.md)
+  - 了解v1.0.0的[ice](/webrtc/v1.0.0-003.md),与其说是库，还不如说辅助功能
   - 了解v1.0.0的[rtp](/webrtc/v1.0.0-004.md)
   - 了解v1.0.0的[rtp/codecs](/webrtc/v1.0.0-005.md)
   - 了解v1.0.0的[sdp](/webrtc/v1.0.0-006.md)
