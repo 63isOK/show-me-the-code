@@ -22,7 +22,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.0.0的[util](/webrtc/v1.0.0-007.md), 纯工具包
   - 了解v1.0.0的[dtls](/webrtc/v1.0.0-008.md),c实现的dtls，用Go封装了一下
   - 了解v1.0.0的[network](/webrtc/v1.0.0-009.md),udp监听的封装，处理了网络的收发
-  - 了解v1.0.0的[webrtc](/webrtc/v1.0.0-010.md)
+  - 了解v1.0.0的[webrtc](/webrtc/v1.0.0-010.md),对外暴露了RTCPeerConnection
   - 了解v1.0.0的[demo](/webrtc/v1.0.0-011.md)
 
 ## release
