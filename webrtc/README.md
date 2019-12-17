@@ -26,7 +26,8 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.0.0的[demo](/webrtc/v1.0.0-011.md),因为dtls不是纯Go，就部分细demo了
 - 2018/11,发布v1.1.0,[发布说明](#v1.1.0)
 - 2019/04,发布v1.2.0,[发布说明](#v1.2.0)
-  - 了解v1.2.0的[rtcerr](/webrtc/v1.2.0-001.md)
+  - 了解v1.2.0的[官方文档](/webrtc/v1.2.0-000.md)
+  - 了解v1.2.0的[rtcerr](/webrtc/v1.2.0-001.md), 封装了webrtc的错误
   - 了解v1.2.0的[ice](/webrtc/v1.2.0-002.md)
   - 了解v1.2.0的[rtp](/webrtc/v1.2.0-003.md)
   - 了解v1.2.0的[rtp/codecs](/webrtc/v1.2.0-004.md)
