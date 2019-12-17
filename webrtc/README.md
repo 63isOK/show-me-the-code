@@ -26,6 +26,24 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.0.0的[demo](/webrtc/v1.0.0-011.md),因为dtls不是纯Go，就部分细demo了
 - 2018/11,发布v1.1.0,[发布说明](#v1.1.0)
 - 2019/04,发布v1.2.0,[发布说明](#v1.2.0)
+  - 了解v1.2.0的[rtcerr](/webrtc/v1.2.0-001.md)
+  - 了解v1.2.0的[ice](/webrtc/v1.2.0-002.md)
+  - 了解v1.2.0的[rtp](/webrtc/v1.2.0-003.md)
+  - 了解v1.2.0的[rtp/codecs](/webrtc/v1.2.0-004.md)
+  - 了解v1.2.0的[null](/webrtc/v1.2.0-005.md)
+  - 了解v1.2.0的[media/samplebuilder](/webrtc/v1.2.0-006.md)
+  - 了解v1.2.0的[media/ivfwriter](/webrtc/v1.2.0-007.md)
+  - 了解v1.2.0的[datachannel](/webrtc/v1.2.0-008.md)
+  - 了解v1.2.0的[util](/webrtc/v1.2.0-009.md)
+  - 了解v1.2.0的[sdp](/webrtc/v1.2.0-010.md)
+  - 了解v1.2.0的[srtp](/webrtc/v1.2.0-011.md)
+  - 了解v1.2.0的[sctp](/webrtc/v1.2.0-012.md)
+  - 了解v1.2.0的[internal/datachannel](/webrtc/v1.2.0-013.md)
+  - 了解v1.2.0的[mux](/webrtc/v1.2.0-014.md)
+  - 了解v1.2.0的[rtcp](/webrtc/v1.2.0-015.md)
+  - 了解v1.2.0的[network](/webrtc/v1.2.0-016.md)
+  - 了解v1.2.0的[webrtc](/webrtc/v1.2.0-017.md)
+  - 了解v1.2.0的[demo](/webrtc/v1.2.0-018.md)
 
 ## release
 
@@ -48,3 +66,12 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - RTCP支持(有了这个，就可以实现sfu)
 
 ### v1.2.0
+
+- 第三个版本，纯Go版本，新增特征如下
+  - 支持原始rtp流接入(不是解码，重编码，而是rtp协议级直接支持)
+  - 支持Trickle-ice(任何时候都可以添加ice候选)，google/firefox都支持
+  - 支持rtcp reception，允许应用程序和rtcp包交互和触发
+  - 传输部分重构
+  - dtls用Go实现
+  - srtp改进，并新增tag认证检查
+  - rtcp的go-fuzz支持，(go-fuzz是一个随机测试)
