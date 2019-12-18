@@ -30,7 +30,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.2.0的[rtcerr](/webrtc/v1.2.0-001.md), 封装了webrtc的错误
   - 了解v1.2.0的[ice](/webrtc/v1.2.0-002.md),完整的ice连接协商过程，让调用方只关注实际数据的收发即可
   - 了解v1.2.0的[rtp](/webrtc/v1.2.0-003.md),提供rtp报文和字节流之间的转换能能力
-  - 了解v1.2.0的[rtp/codecs](/webrtc/v1.2.0-004.md)
+  - 了解v1.2.0的[rtp/codecs](/webrtc/v1.2.0-004.md),opus/vp8没啥变化，新增了h264/g722的切片逻辑
   - 了解v1.2.0的[null](/webrtc/v1.2.0-005.md)
   - 了解v1.2.0的[media/samplebuilder](/webrtc/v1.2.0-006.md)
   - 了解v1.2.0的[media/ivfwriter](/webrtc/v1.2.0-007.md)
