@@ -34,7 +34,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.2.0的[null](/webrtc/v1.2.0-005.md),附加了一个固定的校验零值的方法
   - 了解v1.2.0的[media/samplebuilder](/webrtc/v1.2.0-006.md),封装底层的rtp相关操作，对外暴露媒体编码之后的接口
   - 了解v1.2.0的[media/ivfwriter](/webrtc/v1.2.0-007.md),写磁盘
-  - 了解v1.2.0的[datachannel](/webrtc/v1.2.0-008.md)
+  - 了解v1.2.0的[datachannel](/webrtc/v1.2.0-008.md),定义两种datachannel支持的数据格式
   - 了解v1.2.0的[util](/webrtc/v1.2.0-009.md)
   - 了解v1.2.0的[sdp](/webrtc/v1.2.0-010.md)
   - 了解v1.2.0的[srtp](/webrtc/v1.2.0-011.md)
