@@ -39,7 +39,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.2.0的[sdp](/webrtc/v1.2.0-010.md),重构了sdp的实现,扩展了ice和字符串的转换
   - 了解v1.2.0的[srtp](/webrtc/v1.2.0-011.md),对srtp的一个实现，对rtp/rtcp提供了加解密功能
   - 了解v1.2.0的[sctp](/webrtc/v1.2.0-012.md),sctp的一个实现，用于datachannel传数据
-  - 了解v1.2.0的[internal/datachannel](/webrtc/v1.2.0-013.md)
+  - 了解v1.2.0的[internal/datachannel](/webrtc/v1.2.0-013.md),暴露DataChannel的接口
   - 了解v1.2.0的[mux](/webrtc/v1.2.0-014.md)
   - 了解v1.2.0的[rtcp](/webrtc/v1.2.0-015.md)
   - 了解v1.2.0的[network](/webrtc/v1.2.0-016.md)
