@@ -42,7 +42,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.2.0的[internal/datachannel](/webrtc/v1.2.0-013.md),暴露DataChannel的接口
   - 了解v1.2.0的[mux](/webrtc/v1.2.0-014.md), webrtc协议中接收socket的多路复用
   - 了解v1.2.0的[rtcp](/webrtc/v1.2.0-015.md),rtcp多种格式的实现
-  - 了解v1.2.0的[network](/webrtc/v1.2.0-016.md)
+  - 了解v1.2.0的[network](/webrtc/v1.2.0-016.md),对底层网络连接的封装
   - 了解v1.2.0的[webrtc](/webrtc/v1.2.0-017.md)
   - 了解v1.2.0的[demo](/webrtc/v1.2.0-018.md)
 
