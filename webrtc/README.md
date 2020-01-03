@@ -43,8 +43,16 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.2.0的[mux](/webrtc/v1.2.0-014.md), webrtc协议中接收socket的多路复用
   - 了解v1.2.0的[rtcp](/webrtc/v1.2.0-015.md),rtcp多种格式的实现
   - 了解v1.2.0的[network](/webrtc/v1.2.0-016.md),对底层网络连接的封装
-  - 了解v1.2.0的[webrtc](/webrtc/v1.2.0-017.md)
-  - 了解v1.2.0的[demo](/webrtc/v1.2.0-018.md)
+  - 了解v1.2.0的[webrtc](/webrtc/v1.2.0-017.md),配置和连接的构造
+    - webrtc的4大状态
+      - [信令状态](/webrtc/v1.2.0-018.md)
+      - [ice收集状态](/webrtc/v1.2.0-019.md)
+      - [ice连接状态](/webrtc/v1.2.0-020.md)
+      - [p2p连接状态](/webrtc/v1.2.0-021.md)
+    - webrtc sdp 模型
+      - [sdp类型 RTCSdpType](/webrtc/v1.2.0-22.md)
+      - [sdp结构](/webrtc/v1.2.0-23.md)
+  - 了解v1.2.0的[demo](/webrtc/v1.2.0-022.md)
 
 ## release
 
