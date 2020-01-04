@@ -48,7 +48,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
       - [信令状态 RTCSignalingState](/webrtc/v1.2.0-018.md), 检查jsep状态机
       - [ice收集状态 RTCIceGatheringState](/webrtc/v1.2.0-019.md)，定义了3种
       - [p2p连接状态 RTCPeerConnectionState](/webrtc/v1.2.0-020.md),定义了6种
-      - [ice连接状态](/webrtc/v1.2.0-021.md)
+      - [ice连接状态](/webrtc/v1.2.0-021.md),定义了7种
     - webrtc sdp 模型
       - [sdp类型 RTCSdpType](/webrtc/v1.2.0-22.md),对offer/answer做了扩展：临时answer
       - [sdp结构](/webrtc/v1.2.0-23.md)
