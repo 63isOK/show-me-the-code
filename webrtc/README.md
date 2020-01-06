@@ -58,21 +58,21 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
 
 [标准的链接](https://www.w3.org/TR/webrtc/)
 
-1. 介绍
-2. 符合标准
-3. 术语
-4. p2p链接
-   4.1. [介绍](webrtc/spec/p2p-connection-introduction.md)
-5. rtp媒体接口
-6. p2p数据接口
-7. p2p的DTMF(双音多频)
-8. 统计模型
-9. 网络使用中，媒体流api的扩展
-10. 例子和调用流程
-11. 错误处理
-12. 事件汇总
-13. 隐私和安全选项
-14. 辅助功能
+- 1 介绍
+- 2 符合标准
+- 3 术语
+- 4 p2p链接
+  - 4.1 [介绍](webrtc/spec/p2p-connection-introduction.md)
+- 5 rtp媒体接口
+- 6 p2p数据接口
+- 7 p2p的DTMF(双音多频)
+- 8 统计模型
+- 9 网络使用中，媒体流api的扩展
+- 10 例子和调用流程
+- 11 错误处理
+- 12 事件汇总
+- 13 隐私和安全选项
+- 14 辅助功能
 
 ## release
 
