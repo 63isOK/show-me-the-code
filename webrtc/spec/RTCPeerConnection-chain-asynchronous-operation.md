@@ -33,3 +33,23 @@ spec是以jsep看齐，所以利用了js上的promise异步操作来描述，
     - 如果操作队列非空，执行第一个操作
 
 好吧，这就是一个消息队列的基本处理过程，没有什么新的东西
+
+## pion/webrtc@v1.2.0的举例
+
+    func (pc *RTCPeerConnection) Close() error {
+      if pc.isClosed {
+        return nil
+      }
+
+      err := pc.networkManager.Close()
+
+      pc.isClosed = true
+      pc.SignalingState = RTCSignalingStateClosed
+      pc.IceConnectionState = ice.ConnectionStateClosed // FIXME REMOVE
+      pc.ConnectionState = RTCPeerConnectionStateClosed
+
+      return err
+    }
+
+上面只是随意截取的一段代码，很多类似可以异步的调用中，
+都会有一个pc.isClosed的判断，如果已经关闭，就按xxx处理。
