@@ -62,7 +62,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
 2. 符合标准
 3. 术语
 4. p2p链接
-   4.1 [介绍](webrtc/spec/p2p-connection-introduction.md)
+   4.1. [介绍](webrtc/spec/p2p-connection-introduction.md)
 5. rtp媒体接口
 6. p2p数据接口
 7. p2p的DTMF(双音多频)
