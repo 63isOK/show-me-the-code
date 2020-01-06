@@ -1,5 +1,9 @@
 # RTCPeerConnection 构造
 
+## spec
+
+[链接](https://www.w3.org/TR/webrtc/#constructor)
+
 webrtc spec规定，构造时需要完成以下几个步骤，27个
 
 - 下面步骤中，任务未提及的失败，都需要抛出一个UnknownError异常
@@ -36,3 +40,91 @@ webrtc spec规定，构造时需要完成以下几个步骤，27个
   - CurrentRemoteDescription
 - 如果有LocalIceCredentialsToReplace字段，初始化为空
 - 返回连接实例(RTCPeerConnection)
+
+## pion/webrtc@v1.2.0中RTCPeerConnection的实现
+
+    func New(configuration RTCConfiguration) (*RTCPeerConnection, error) {
+      pc := RTCPeerConnection{
+        configuration: RTCConfiguration{
+          IceServers:           []RTCIceServer{},
+          IceTransportPolicy:   RTCIceTransportPolicyAll,
+          BundlePolicy:         RTCBundlePolicyBalanced,
+          RtcpMuxPolicy:        RTCRtcpMuxPolicyRequire,
+          Certificates:         []RTCCertificate{},
+          IceCandidatePoolSize: 0,
+        },
+        isClosed:          false,
+        negotiationNeeded: false,
+        lastOffer:         "",
+        lastAnswer:        "",
+        SignalingState:    RTCSignalingStateStable,
+        // IceConnectionState: RTCIceConnectionStateNew, // FIXME SWAP-FOR-THIS
+        IceConnectionState: ice.ConnectionStateNew, // FIXME REMOVE
+        IceGatheringState:  RTCIceGatheringStateNew,
+        ConnectionState:    RTCPeerConnectionStateNew,
+        mediaEngine:        DefaultMediaEngine,
+        sctpTransport:      newRTCSctpTransport(),
+        dataChannels:       make(map[uint16]*RTCDataChannel),
+      }
+
+      var err error
+      if err = pc.initConfiguration(configuration); err != nil {
+        return nil, err
+      }
+
+      var urls []*ice.URL
+      for _, server := range pc.configuration.IceServers {
+        for _, rawURL := range server.URLs {
+          var url *ice.URL
+          url, err = ice.ParseURL(rawURL)
+          if err != nil {
+            return nil, err
+          }
+
+          urls = append(urls, url)
+        }
+      }
+
+      pc.networkManager = network.NewManager(urls, pc.generateChannel, pc.iceStateChange)
+
+      return &pc, nil
+    }
+
+这个实现基本符合spec中的规定，只是少了:
+
+- origin字段
+- EarlyCandidates字段
+- LocalIceCredentialsToReplace字段
+
+下面看看initConfiguration()，下面就不贴代码了，对着源码看
+
+- 这个函数的描述是：对RTCConfiguration进行校验，并初始化一些值
+- 这个函数和SetConfiguration有些不同，这个函数仅作为初始化检测，检测的项少一些
+
+ps:RTCPeerConnection中的RTCConfiguration字段是值，不是引用。
+在New()，RTCPeerConnection实例化时，只是简单初始化了一个RTCConfiguration对象，
+并未从入参拷贝任何值。
+
+流程如下：
+
+- 拷贝peer的标识名
+- 如果有509证书
+  - 判断证书是否过期，过期就报InvalidAccessError异常(符合spec)
+  - 没有过期的拷贝到RTCPeerConnection.RTCConfigurate
+- 没有证书
+  - 利用Go的标准库cryto，生成一个证书,因为重心不在加解密，所以暂时不深入生成证书的过程
+- 拷贝bundle策略/rtcp复用策略/ice候选策略
+- 拷贝ice候选池的大小
+- 校验ice服务列表，并拷贝
+
+校验ice服务列表很有意思，在rtciceserver.go，RTCIceServer.validate(),
+遍历所有的服务url，按不同的证书类型(这里的证书是指ice服务访问整数)，
+解析后，查看是否有解析失败的。之前的文章也提到了，ice服务证书有两种：
+密码 + OAuth2.0。
+
+从initConfiguration()回到New()构造函数，
+构造函数的后面一节是从配置中提取出ice的url列表，然后构造出一个network.Manager对象。
+
+## 最后
+
+pion/webrtc@v1.2.0， 对于RTCPeerConnection的构造是符合webrtc spec的。
