@@ -65,6 +65,8 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 4.1 [p2p连接的介绍](/webrtc/spec/p2p-connection-introduction.md)
   - 4.4 [RTCPeerConnection接口](/webrtc/spec/RTCPeerConnection-interface.md)
     - 4.4.1 [操作流程](/webrtc/spec/RTCPeerConnection-operation.md)
+    - 4.4.1 [操作流程](/webrtc/spec/RTCPeerConnection-operation.md)
+      - 4.4.1.1 [RTCPeerConnection构造](/webrtc/spec/RTCPeerConnection-constructor.md)
 - 5 rtp媒体接口
 - 6 p2p数据接口
 - 7 p2p的DTMF(双音多频)
