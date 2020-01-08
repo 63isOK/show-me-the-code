@@ -245,3 +245,75 @@ addList/removeList 来"设置相关的远端流"
       - 接口的transceiver属性初始化为每个实例的transceiver
     - 将这个设置sdp的异步操作解析为undefined
 - 返回这个异步操作
+
+## pion/webrtc@v1.2.0 对设置sdp的处理
+
+### RTCPeerConnection中的4个sdp指针
+
+- CurrentLocalDescription
+  - 一个本地sdp，已经协商成功了，信令状态已经是stable了
+  - 这个还包含了ice agent创建offer/answer之后，所生成的本地ice候选
+- CurrentRomoteDescription
+  - 一个远端sdp，已经协商成功了，信令状态已经是stable了
+  - 这个还包含了offer/answer创建之后，任何通过AddIceCandidate()添加的远端ice候选
+- PendingLocalDescription
+  - 一个本地sdp，正在做协商
+  - 这个还包含了ice agent创建offer/answer之后，所生成的本地ice候选
+  - 信令状态转变为stable之后，这个值会置空，也就是nil
+- PendingRomoteDescription
+  - 一个远端sdp，正在做协商
+  - 这个还包含了offer/answer创建之后，任何通过AddIceCandidate()添加的远端ice候选
+  - 信令状态转变为stable之后，这个值会置空，也就是nil
+
+### RTCPeerConnection中和sdp相关的处理方法
+
+- offer/answer的生成
+  - CreateOffer
+  - CreateAnswer
+- sdp的设置
+  - SetLocalDescription
+  - SetRemoteDescription
+- 读取sdp信息
+  - LocalDescription
+  - RemoteDescription
+
+下面依次来读这几个方法。
+
+#### 生成offer
+
+rtcpeerconnection.go
+
+    func (pc *RTCPeerConnection) CreateOffer(
+      options *RTCOfferOptions) (RTCSessionDescription, error)
+
+    type RTCOfferAnswerOptions struct {
+      // VoiceActivityDetection allows the application to provide information
+      // about whether it wishes voice detection feature to be enabled or disabled.
+      VoiceActivityDetection bool
+    }
+
+    // RTCAnswerOptions structure describes the options used to control the answer
+    // creation process.
+    type RTCAnswerOptions struct {
+      RTCOfferAnswerOptions
+    }
+
+    // RTCOfferOptions structure describes the options used to control the offer
+    // creation process
+    type RTCOfferOptions struct {
+      RTCOfferAnswerOptions
+
+      // IceRestart forces the underlying ice gathering process to be restarted.
+      // When this value is true, the generated description will have ICE
+      // credentials that are different from the current credentials
+      IceRestart bool
+    }
+
+在分析函数内部之前，先看下参数
+
+spec中定义是这样的：
+
+    Promise<RTCSessionDescriptionInit> 
+      createOffer(optional RTCOfferOptions options = {});
+
+可以看spec的4.2.7

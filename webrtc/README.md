@@ -63,6 +63,8 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
 - 3 术语
 - 4 p2p连接
   - 4.1 [p2p连接的介绍](/webrtc/spec/p2p-connection-introduction.md)
+  - 4.2 配置
+    - 4.2.7 [offer/answer选项](/webrtc/spec/offer-answer-options.md)
   - 4.4 [RTCPeerConnection接口](/webrtc/spec/RTCPeerConnection-interface.md)
     - 4.4.1 [操作流程](/webrtc/spec/RTCPeerConnection-operation.md)
     - 4.4.1 [操作流程](/webrtc/spec/RTCPeerConnection-operation.md)
