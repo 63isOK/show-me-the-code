@@ -51,3 +51,26 @@ webrtc spec还提到了，当ice连接状态是failed时，推荐进行ice resta
 restart是最好的选择。
 
 至于AnswerOption，webrtc spec中并没有进一步描述，等会看源码就行。
+
+## pion/webrtc@v1.2.0
+
+    type RTCOfferAnswerOptions struct {
+
+      // webrtc 后续spec中会规划的参数
+      // 按文档意思，是音频检测功能是否开启
+      VoiceActivityDetection bool
+    }
+
+    type RTCAnswerOptions struct {
+      RTCOfferAnswerOptions
+    }
+
+    type RTCOfferOptions struct {
+      RTCOfferAnswerOptions
+
+      // 为true
+      // 表示证书是不一样的了，ice候选收集流程又重新开始了
+      IceRestart bool
+    }
+
+源码中很简单，只是定义了几个结构，具体的用法可以看生成offer/answer的其他文章
