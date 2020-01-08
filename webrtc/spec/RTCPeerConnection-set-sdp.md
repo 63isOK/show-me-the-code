@@ -146,3 +146,102 @@ spec规定，应该有一个设置函数，入参应该有个boolean表示是远
           - 利用上面创建的两个对象，创建一个RTCRtpTransceiver
           - RTCRtpTransceiver.RTCRtpTransceiverDirection = recvonly
           - 将新创建的RTCRtpTransceiver添加到RTCPeerConnection的传输通道列表中
+        - 如果sdp类型是answer/pranswer，且transceiver.Sender.SendEncodings多于一个(启动了联播)
+          - 如果sdp中不支持联播
+            - transceiver.Sender.SendEncodings只保留第一个，其他删除
+            - 跳过剩下的子步骤
+          - 如果sdp不支持分层(联播中每一层表示一个质量)
+            - transceiver.Sender.SendEncodings中删除和分层相关的编码格式
+          - 对于联播中的每层
+            - 设置active属性为true/false，可以暂停/恢复某一层的流
+        - transceiver.mid的值设置为sdp中的值
+          - 如果sdp中没有mid，就随机生成一个
+        - direction设置成sdp中的值
+          - 数据发送者设置为receive
+          - 数据接收者设置为send
+          - 两者是颠倒的
+        - 如果direction是sendrecv/recvonly
+          - msids设置为transceiver.Receiver.ReceiverTranck中msids的列表
+          - direction是其他值时，msids设置为空
+        - 传入transceiver.Receiver/msids/addList/removeList 来"设置相关的远端流"
+        - 如果direction是sendrecv/recvonly
+          - 如果transceiver.FiredDirection不是sendrecv/recvonly
+            - 如果上一步(设置相关远端流)还添加了元素到addList
+              - 传入transceiver/trackEventInits 来"删除媒体级描述中的远端track"
+        - 如果direction是sendonly/inactive
+          - transceiver.Receptive = false
+        - 如果direction是sendonly/inactive
+          - 如果transceiver.FiredDirection是sendrecv/recvonly
+            - 传入transceiver/muteTracks 来"删除媒体级描述中的远端track"
+        - transceiver.FiredDirection = direction
+        - transceiver.Receiver.ReceiveCodecs = sdp媒体级中准备接收的编码格式
+        - 如果sdp类型是answer/pranswer
+          - transceiver.Sender.SendCodecs = sdp媒体级中准备发送的编码格式
+          - transceiver.CurrentDirection = direction
+          - transceiver.Direction = direction
+          - 依据bundle策略，将transport设置为rtp/rtcp复用的那个RTCDtlsTransport实例
+          - transceiver.Sender.SenderTransport = transport
+          - transceiver.Receiver.ReceiverTransport = transport
+          - 设置transport的ice角色
+            - 如果ice角色是unknow，就修改transport.IceRole
+            - 如果sdp是本地offer，transport.IceRole = controlling
+            - 如果sdp是远端offer
+              - 如果sdp中还包含了"a=ice-lite"
+                - transport.IceRole = controlling
+              - sdp不包含"a=ice-lite"
+                - transport.IceRole = controlled
+        - 如果这个媒体级未协商成功(被拒绝了)，且transceiver.Stopped 是false
+          - 关闭这个RTCRtpTransceiver
+    - 如果sdp类型是rollback
+      - 对于RTCPeerConnection.transceivers列表中的每个transceiver：
+        - 在设置RTCSessionDescription之前，如果transceiver并未和媒体级sdp关联
+          - 回滚就很简单，不关联，且将transceiver.mid 设置为null
+        - transceiver.Sender.SenderTransport = transceiver.Sender.LastStableStateSenderTransport
+        - transceiver.Receiver.ReceiverTransport = transceiver.Receiver.LastStableStateReceiverTransport
+        - 传入transceiver.Receiver/transceiver.Receiver.LastStableStateAssociatedRemoteMediaStreams/
+addList/removeList 来"设置相关的远端流"
+        - transceiver.Receiver.ReceiveCodecs = transceiver.Receiver.LastStableStateReceiveCodecs
+        - 如果要回滚通过RTCSessionDescription创建transceiver，且还没有调用addTrack来添加轨道
+          - 如果transceiver.FiredDirection是sendrecv/recvonly
+            - 传入transceiver/muteTracks 来"删除媒体级描述中的远端track"
+            - transceiver.FiredDirection = inactive
+          - 停止这个transceiver
+          - 从RTCPeerConnection.transceivers中移除这个transceiver
+        - 其他情况(不像上面那几种简单情况)
+          - 如果transceiver.FiredDirection 是sendonly/inactive
+            - 如果transceiver.CurrentDirection 是sendrecv/recvonly，
+或是上一步的"删除媒体级描述中的远端track"导致addList增加了元素
+              - 传入transceiver/trackEventInits 来"删除媒体级描述中的远端track"
+              - transceiver.Receptive = true
+          - 如果transceiver.FiredDirection 是sendrecv/recvonly
+            - 如果transceiver.CurrentDirection 是sendonly/inactive/null
+              - 传入transceiver/muteTracks 来"删除媒体级描述中的远端track"
+              - transceiver.Receptive = false
+          - transceiver.FiredDirection = transceiver.CurrentDirection
+      - RTCPeerConnection.PendingLocalDescription = null
+      - RTCPeerConnection.PendingRemoteDescription = null
+      - RTCPeerConnection的信令状态设置为stable
+    - 如果sdp是answer类型
+      - 对于RTCPeerConnection.transceivers列表中的每个transceiver：
+        - 如果transceiver已经stopped，或是她对应的m=媒体级被拒绝了
+          - 从RTCPeerConnection.transceivers列表中删除
+    - 如果RTCPeerConnection的信令状态是stable
+      - "更新协商标记"
+      - 如果更新操作执行前后，RTCPeerConnection.NegotiationNeeded都是true
+        - 那么将下面几步作为一个异步操作添加到任务队列中
+          - 如果RTCPeerConnection.IsClosed是true，跳过之后的步骤
+          - 如果RTCPeerConnection.NegotiationNeeded 是false，跳过之后的步骤
+          - 触发一个叫negotiationneeded的事件
+    - 上一步中，如果信令状态改变了，触发一个叫signalingstatechange的事件
+    - 对于每个在errorList中的datachannel
+      - 使用RTCErrorEvent接口触发一个叫error的事件，接口的errorDetail属性设置为"打他-channel-failure"
+    - 遍历muteTracks，将每个track的静音状态改为true
+    - 遍历removeList，将指定的track从stream中删除
+    - 遍历addList，添加track到stream中
+    - 对于每个trackEventInits实例，使用RTCTrackEvent接口触发一个叫track的事件
+      - 接口的receiver属性初始化为每个实例的receiver
+      - 接口的track属性初始化为每个实例的track
+      - 接口的streams属性初始化为每个实例的streams
+      - 接口的transceiver属性初始化为每个实例的transceiver
+    - 将这个设置sdp的异步操作解析为undefined
+- 返回这个异步操作
