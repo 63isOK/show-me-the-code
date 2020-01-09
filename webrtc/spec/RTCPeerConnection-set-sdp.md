@@ -316,4 +316,6 @@ spec中定义是这样的：
     Promise<RTCSessionDescriptionInit> 
       createOffer(optional RTCOfferOptions options = {});
 
-可以看spec的4.2.7
+可以看spec的4.2.7对应的分析。
+
+回到创建offer创建的函数, 好吧，spec也有定义，所以分单独的篇章来分析4.4.2
