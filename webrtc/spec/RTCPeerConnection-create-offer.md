@@ -69,9 +69,45 @@ connection创建一个offer的步骤：
 
 上面这段不太好理解，看下rfc对sdp中bundle复用协商的[描述](https://tools.ietf.org/html/draft-ietf-mmusic-sdp-bundle-negotiation-54#section-7)
 
+整理完下面这节后,继续来看
+
+用connection和异步操作p，创建offer的最后几步：
+
+- 如果connection.IsClosed是true，跳过下面的步骤
+- 如果connection被改变了
+  - 那需要进行offer生成的系统进行检查，并执行"并发创建offer",并跳过后面的步骤
+- 根据上一步的检查信息/当前连接状态/还有RTCRtpTransceivers，生成sdp
+  - 如果有启动bundle策略，呼叫者必须标记一些媒体级用于协商，也就是推荐的过程
+    - 推荐的媒体级应该和第一个未关闭的transceiver关联
+    - 关联的好处是让远端不解析sdp就可以预测offer标记媒体级关联的transceiver是哪个
+  - 这个媒体级关联的transceiver指定的优先编码格式，主要看RTCRtpTranceiver.PreferredCodecs的规则
+    - 如果RTCRtpTranceiver.PreferredCodecs为空，那sdp中就不设置编码格式
+    - transceiver.direction是sendrecv
+      - 那排除不在下列列表中的所有编码格式
+        - RTCRtpSender.getCapabilities(kind).codecs
+        - RTCRtpReceiver.getCapabilities(kind).codecs
+    - transceiver.direction是sendonly
+      - 那排除不在下列列表中的所有编码格式
+        - RTCRtpSender.getCapabilities(kind).codecs
+    - transceiver.direction是recvonly
+      - 那排除不在下列列表中的所有编码格式
+        - RTCRtpReceiver.getCapabilities(kind).codecs
+    - 不管如何，上面3个规则并不影响编码格式的优先级
+  - RTCRtpSender.SendEncodings里的成员大于1，
+    - 对于SendEncodings中的每中编码格式，给相应的媒体级添加一个a=rid send行
+    - 然后在rid下添加一行 a=simulcast:send
+    - rid 不能冲突
+- 创建一个RTCSessionDescriptionInit对象，这就是生成的offer对象
+  - type初始化成"offer"
+  - sdp初始化为刚刚生成的sdp字符串
+- LastCreatedOffer设置为sdp字符串
+- 返回异步操作p和offer对象
+
 ## sdp offer/answer 处理(bundle复用后的协商处理)
 
 这个目前还是草稿协议，是对sdp协议(rfc3264)的一个扩展。
+
+[rfc](https://tools.ietf.org/html/draft-ietf-mmusic-sdp-bundle-negotiation-54)
 
 1.2 bundle机制
 
