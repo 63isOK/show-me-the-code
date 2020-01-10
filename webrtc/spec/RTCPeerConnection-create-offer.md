@@ -326,3 +326,14 @@ offer中如果媒体级端口是0,但并没有bundle-only，说明这个媒体�
 除非拒绝整个offer，不然被呼叫者必须在在bundle group中移除一个媒体级，或是拒绝一个。
 
 拒绝一个媒体级，answer中只要将媒体级的端口设为0,不需要添加bundle-only,即可
+
+## pion/webrtc@v1.2.0中创建offer的分析
+
+RTCPeerConnection中有一个字段叫 idpLoginURL, idp 是identity provider，
+在pion中是一个字符串指针，一直是nil。
+
+CreateOffer流程：
+
+- v1.2.0不支持参数RTCOfferOptions
+- 如果连接关闭，就不再生成sdp了
+- 调用sdp.NewJSEPSessionDescription生成一个ice.sdp, 先看看sdp库的分析
