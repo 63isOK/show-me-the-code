@@ -56,3 +56,21 @@ RTCPeerConnection的证书是用来生成指纹的，sdp的构造会用到这些
     - rid要保持不能冲突
 - 创建一个RTCSessionDescriptionInit，类型是answer，sdp就是上一步生成的sdp字符串
 - 返回p和answer
+
+## pion/webrtc@v1.2.0
+
+创建answer的流程如下：
+
+- 不处理参数RTCAnswerOptions
+- 收集本地ice候选
+- 生成一个sdp对象
+- 添加指纹
+- 遍历offer中的媒体级信息
+  - 读取每个媒体级的mid,和流方向(一个是媒体级id，一个是send/recv标识)
+  - 针对不同的数据格式(音频/视频/应用数据)，创建对应的媒体级sdp
+- 启用bundle(在会话级添加bundle的支持)
+- 创建一个RTCSessionDescription来存放上面的数据
+- 更新状态：lastAnswer/local sdp
+
+值得注意的是，spec中bundle的指定，tag是自由的，
+在pion实现中，tag直接取了mid(媒体id，也就是video/audio/data)
