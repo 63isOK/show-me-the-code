@@ -337,3 +337,19 @@ CreateOffer流程：
 - v1.2.0不支持参数RTCOfferOptions
 - 如果连接关闭，就不再生成sdp了
 - 调用sdp.NewJSEPSessionDescription生成一个ice.sdp, 先看看sdp库的分析
+- 分析完了sdp中对jsep的支持，知道了sdp.NewJSEPSessionDescription仅仅是生成了一个sdp
+- 调用addFingerprint()
+  - 取配置对象中第一个证书
+  - 用证书生成指纹(目前只有一个)
+  - 将指纹写入到sdp (a=fingerprint:指纹生成算法 指纹)
+- 调用generateLocalCandidates()来收集本地ice候选
+  - 最后调用ice.Agent.GetLocalCandidates()来读取map中存的本地候选
+    - 本地候选啥时候来的？
+    - ice.NewAgent()时就调用了gatherCandidatesXXX()来获取候选了
+- 调用addRTPMediaSection()来添加3重媒体级(audio/video/data)
+  - 调用sdp.NewJSEPMediaDescription()来生成一个媒体级信息
+  - 根据传入参数和track信息，完善媒体级信息
+  - 将媒体级信息添加到会话级信息中
+  - 其中data走的是sctp，媒体级属性相对固定一些
+- 更新本地状态
+  - 更新lastOffer/Local sdp
