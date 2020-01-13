@@ -72,9 +72,11 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
       - 4.4.1.3 [p2p连接状态的更新](/webrtc/spec/RTCPeerConnection-update-connection-state.md)
       - 4.4.1.4 [ice候选收集状态的更新](/webrtc/spec/RTCPeerConnection-update-ice-gathering-state.md)
       - 4.4.1.5 [设置sdp](/webrtc/spec/RTCPeerConnection-set-sdp.md)
+      - 4.4.1.6 [设置配置](/webrtc/spec/RTCPeerConnection-set-configuration-flow.md)
     - 4.4.2 接口定义
       - [createOffer](/webrtc/spec/RTCPeerConnection-create-offer.md)
       - [createAnswer](/webrtc/spec/RTCPeerConnection-create-answer.md)
+      - [setConfiguration](/webrtc/spec/RTCPeerConnection-set-configuration.md)
 - 5 rtp媒体接口
 - 6 p2p数据接口
 - 7 p2p的DTMF(双音多频)
