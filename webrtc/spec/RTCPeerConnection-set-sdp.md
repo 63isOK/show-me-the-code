@@ -321,3 +321,79 @@ spec中定义是这样的：
 回到创建offer创建的函数, 好吧，spec也有定义，所以分单独的篇章来分析4.4.2
 
 createOffer/createAnswer 都可以看4.4.2
+
+读取local/remote sdp都非常简单:
+
+- 有临时的就返回临时的
+- 没有临时的就返回最终的
+
+### 设置sdp的具体流程
+
+### SetLocalDescription
+
+传进来的sdp里包含了sdp字符串，
+这个函数的功能主要是解析sdp字符串，反序列化到结构体实例
+
+最后调用setDescription来完成具体的设置流程
+
+setDescription流程如下：
+
+根据设置动作分：
+
+- 设置local
+  - offer
+    - 校验当前设置是否是lastOffer(调用这个函数，sdp是从lastXXX取的)
+    - 调用checkNextSignalingState来检查下个状态是否正确
+    - 本地临时sdp指向这个sdp
+  - answer
+    - 检验当前sdp是不是lastAnswer
+    - 检查下个状态
+    - 本地sdp指向这个sdp
+    - 远端sdp指向之前存在远端临时的sdp
+    - 重置本地临时/远端临时的sdp(重置为nil)
+  - roolback
+    - 检查下一个状态
+    - 本地临时sdp置为nil
+  - pranswer
+    - 检查当前sdp是不是lastAnswer
+    - 检查下个状态
+    - 本地临时sdp指向这个sdp
+  - 其他：返回无效操作处理
+- 设置remote
+  - offer
+    - 调用checkNextSignalingState来检查下个状态是否正确(应该是have-remote-offer)
+    - 远端临时sdp指向这个sdp
+  - answer
+    - 检查下个状态(下个应该stable)
+    - 远端sdp指向这个sdp
+    - 本地sdp指向之前存在本地临时的sdp
+    - 重置本地临时/远端临时的sdp(重置为nil)
+  - roolback
+    - 检查下一个状态(下个应该是stable)
+    - 临时sdp置为nil
+  - pranswer
+    - 检查下个状态(下个状态应该是have-remote-pranswer)
+    - 远端临时sdp指向这个sdp
+  - 其他：返回无效操作处理
+- 其他情况：返回不匹配错误
+- 更新当前信令状态(设置为下个状态)
+- 回调通知信令状态已经更改 onSignalingStateChange(会调用之前设置的回调函数)
+
+### SetRemoteDescription
+
+- 先检查之前是否已经设置了远端sdp
+- 连接是否已关闭
+- 调用setDescription来更新信令状态和sdp
+- 遍历远端sdp的媒体级
+  - 解析出媒体级中 ice候选和ice-ufrag/ice-pwd属性
+- 解析出会话级的指纹信息(fingerprint)
+  - 如果会话级没有指纹信息，那解析第一个媒体级的指纹，如果还没有，就报错
+- 从指纹信息中，可以解析出两段信息
+  - [rfc sdp中基于dtls的面向连接的媒体传输](https://tools.ietf.org/html/rfc4572#section-5)
+  - a=fingerprint 指纹加密方式 加密段
+  - 利用上面提到的所有信息，在一个新的协程中，启动一个network连接
+  - 同时开启datachannle/acceptDataChannels
+
+## 最后
+
+agent和peer之间的连接，都是从设置远端sdp开始的
