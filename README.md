@@ -24,3 +24,11 @@ WebRTC media server for go.
 ## go fuzz 分析
 
 ## pion/dtls 分析
+
+## my oss
+
+open source sprit
+
+- 2019年 第一次年共享达到1000
+- 2019.10.21 给开源项目提第一个pr被接收
+- 2020.01.06 给超大型开源项目w3c/webrtc-pc提第一个issues
