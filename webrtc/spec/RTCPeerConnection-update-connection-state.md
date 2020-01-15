@@ -106,7 +106,7 @@ agent.go中有一个方法来更新状态
 
 调用这个方法的地方有3处
 
-    func (a *Agent) startConnectivityChecks(isControlling bool, 
+    func (a *Agent) startConnectivityChecks(isControlling bool,
       remoteUfrag, remotePwd string) error {
 
       if a.haveStarted {
@@ -188,12 +188,12 @@ agent.go中有一个方法来更新状态
 这里，只列出了断开连接的发生(心跳超时)，回到ice.Agent.updateConnectionState,
 她是通过调用外部设置的回调函数，来通知的，下面看看这个回调函数的设置：
 
-    // ice库 
+    // ice库
     func NewAgent(urls []*URL, notifier func(ConnectionState)) *Agent
-    // network库 
-    func NewManager(urls []*ice.URL, 
+    // network库
+    func NewManager(urls []*ice.URL,
                     btg BufferTransportGenerator, ntf ICENotifier) *Manager
-    // webrtc库 
+    // webrtc库
     func New(configuration RTCConfiguration) (*RTCPeerConnection, error)
     // 其中中有这么一条
     pc.networkManager = network.NewManager(urls, pc.generateChannel, pc.iceStateChange)

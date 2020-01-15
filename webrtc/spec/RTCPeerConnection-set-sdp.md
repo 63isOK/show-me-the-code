@@ -14,11 +14,11 @@ spec规定，应该有一个设置函数，入参应该有个boolean表示是远
   - 拒绝这次请求，并返回一个InvalidStateError错误
 - 将此次操作，标记为一个异步操作
 - 并行执行设置sdp的流程，其中有个限制:
-如果这个sdp会导致收发器transceiver的修改,
-并且这个收发器transceiver.Sender.SendEncodings非空,
-并且，发送编码和sdp中的还不一致,
-那么设置sdp会失败,
-这个spec规定了，并不允许重新进行RID协商
+  如果这个sdp会导致收发器transceiver的修改,
+  并且这个收发器transceiver.Sender.SendEncodings非空,
+  并且，发送编码和sdp中的还不一致,
+  那么设置sdp会失败,
+  这个spec规定了，并不允许重新进行RID协商
   - 如果设置sdp的过程出错了，要走以下流程
     - RTCPeerConnection.IsClosed是true，退出
     - 结合当前信令状态，如果sdp类型是无效的，就返回一个InvalidStateError错误
@@ -199,7 +199,7 @@ spec规定，应该有一个设置函数，入参应该有个boolean表示是远
         - transceiver.Sender.SenderTransport = transceiver.Sender.LastStableStateSenderTransport
         - transceiver.Receiver.ReceiverTransport = transceiver.Receiver.LastStableStateReceiverTransport
         - 传入transceiver.Receiver/transceiver.Receiver.LastStableStateAssociatedRemoteMediaStreams/
-addList/removeList 来"设置相关的远端流"
+  addList/removeList 来"设置相关的远端流"
         - transceiver.Receiver.ReceiveCodecs = transceiver.Receiver.LastStableStateReceiveCodecs
         - 如果要回滚通过RTCSessionDescription创建transceiver，且还没有调用addTrack来添加轨道
           - 如果transceiver.FiredDirection是sendrecv/recvonly
@@ -210,7 +210,7 @@ addList/removeList 来"设置相关的远端流"
         - 其他情况(不像上面那几种简单情况)
           - 如果transceiver.FiredDirection 是sendonly/inactive
             - 如果transceiver.CurrentDirection 是sendrecv/recvonly，
-或是上一步的"删除媒体级描述中的远端track"导致addList增加了元素
+  或是上一步的"删除媒体级描述中的远端track"导致addList增加了元素
               - 传入transceiver/trackEventInits 来"删除媒体级描述中的远端track"
               - transceiver.Receptive = true
           - 如果transceiver.FiredDirection 是sendrecv/recvonly
@@ -313,7 +313,7 @@ rtcpeerconnection.go
 
 spec中定义是这样的：
 
-    Promise<RTCSessionDescriptionInit> 
+    Promise<RTCSessionDescriptionInit>
       createOffer(optional RTCOfferOptions options = {});
 
 可以看spec的4.2.7对应的分析。
