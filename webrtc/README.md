@@ -53,6 +53,13 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
       - [sdp类型 RTCSdpType](/webrtc/v1.2.0-022.md),对offer/answer做了扩展：临时answer
       - [sdp结构](/webrtc/v1.2.0-23.md)
   - 了解v1.2.0的[demo的整个框架](/webrtc/v1.2.0-024.md)
+    - ~~[gs发送到浏览器](/webrtc/v1.2.0-025.md)~~
+    - ~~[gs从浏览器接收](/webrtc/v1.2.0-026.md)~~
+    - [接收摄像头数据并录制](/webrtc/v1.2.0-027.md)
+    - [sfu分析](/webrtc/v1.2.0-028.md)
+    - [中继](/webrtc/v1.2.0-029.md)
+    - [datachannel传输](/webrtc/v1.2.0-030.md)
+    - [datachannel和浏览器之间的传输](/webrtc/v1.2.0-031.md)
 
 ## webrtc标准熟悉
 
