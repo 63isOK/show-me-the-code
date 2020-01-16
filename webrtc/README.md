@@ -51,7 +51,10 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
       - [ice连接状态](/webrtc/v1.2.0-021.md),定义了7种
     - webrtc sdp 模型
       - [sdp类型 RTCSdpType](/webrtc/v1.2.0-022.md),对offer/answer做了扩展：临时answer
-      - [sdp结构](/webrtc/v1.2.0-23.md)
+      - [sdp结构](/webrtc/v1.2.0-023.md)
+    - webrtc 零碎的知识点
+      - [注册一个编码类型](/webrtc/v1.2.0-032.md)
+    - webrtc 核心业务逻辑
   - 了解v1.2.0的[demo的整个框架](/webrtc/v1.2.0-024.md)
     - ~~[gs发送到浏览器](/webrtc/v1.2.0-025.md)~~
     - ~~[gs从浏览器接收](/webrtc/v1.2.0-026.md)~~
