@@ -55,6 +55,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
     - webrtc 零碎的知识点
       - [注册一个编码类型](/webrtc/v1.2.0-032.md)
       - [ice服务地址的表示](/webrtc/v1.2.0-035.md)
+      - [dtls证书的表示](/webrtc/v1.2.0-036.md)
     - webrtc 核心业务逻辑
       - [创建webrtc底层网络连接](/webrtc/v1.2.0-033.md)
       - [创建datachannel底层网络连接](/webrtc/v1.2.0-034.md)
