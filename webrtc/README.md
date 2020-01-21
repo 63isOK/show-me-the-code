@@ -50,8 +50,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
       - [p2p连接状态 RTCPeerConnectionState](/webrtc/v1.2.0-020.md),定义了6种
       - [ice连接状态](/webrtc/v1.2.0-021.md),定义了7种
     - webrtc sdp 模型
-      - [sdp类型 RTCSdpType](/webrtc/v1.2.0-022.md),对offer/answer做了扩展：临时answer
-      - [sdp结构](/webrtc/v1.2.0-023.md)
+      - [RTCSessionDescription](/webrtc/v1.2.0-041.md)
     - webrtc 零碎的知识点
       - [注册一个编码类型](/webrtc/v1.2.0-032.md)
       - [ice服务地址的表示](/webrtc/v1.2.0-035.md)
@@ -59,6 +58,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
       - [构造连接的参数：配置](/webrtc/v1.2.0-037.md)
       - [agent支持的编码格式：媒体引擎](/webrtc/v1.2.0-038.md)
       - [轨道](/webrtc/v1.2.0-039.md)
+      - [基于轨道的传输通道封装](/webrtc/v1.2.0-040.md)
     - webrtc 核心业务逻辑
       - [创建webrtc底层网络连接](/webrtc/v1.2.0-033.md)
       - [创建datachannel底层网络连接](/webrtc/v1.2.0-034.md)
@@ -94,6 +94,9 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
       - [createOffer](/webrtc/spec/RTCPeerConnection-create-offer.md)
       - [createAnswer](/webrtc/spec/RTCPeerConnection-create-answer.md)
       - [setConfiguration](/webrtc/spec/RTCPeerConnection-set-configuration.md)
+  - 4.6 sdp模型
+    - 4.6.1[sdp类型 RTCSdpType](/webrtc/v1.2.0-022.md),对offer/answer做了扩展：临时answer
+    - 4.6.2[RTCSessionDescription](/webrtc/v1.2.0-023.md)
 - 5 rtp媒体接口
 - 6 p2p数据接口
 - 7 p2p的DTMF(双音多频)
