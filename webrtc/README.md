@@ -102,6 +102,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 4.9 证书管理
 - 5 rtp媒体接口
   - [基础知识补充](/webrtc/v1.2.0-042.md)
+  - 5.1 [对RTCPeerConnection接口的扩展](/webrtc/v1.2.0-043.md)
 - 6 p2p数据接口
 - 7 p2p的DTMF(双音多频)
 - 8 统计模型
