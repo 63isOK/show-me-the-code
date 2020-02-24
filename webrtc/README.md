@@ -98,6 +98,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
     - 4.6.1[sdp类型 RTCSdpType](/webrtc/v1.2.0-022.md),对offer/answer做了扩展：临时answer
     - 4.6.2[RTCSessionDescription](/webrtc/v1.2.0-023.md)
   - 4.7 会话协商模型(v1.2.0未实现，暂不分析)
+    - 4.7.3[会话协商模型的更新](/webrtc/v1.2.0-056.md)
   - 4.8 ice接口
   - 4.9 证书管理
 - 5 rtp媒体接口
