@@ -136,7 +136,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
 - 6 p2p数据接口
   - 6.1 [对RTCPeerConnection接口的扩展](/webrtc/v1.2.0-063.md)
     - 6.1.1 [RTCSctpTransport接口](/webrtc/v1.2.0-064.md)
-    - 6.1.1 [RTCSctpTransportState枚举](/webrtc/v1.2.0-065.md)
+    - 6.1.2 [RTCSctpTransportState枚举](/webrtc/v1.2.0-065.md)
   - 6.2 [RTCDataChannel接口](/webrtc/v1.2.0-060.md)
   - 6.3 [RTCDataChannelEvent接口](/webrtc/v1.2.0-061.md)
   - 6.4 [gc，垃圾回收](/webrtc/v1.2.0-062.md)
