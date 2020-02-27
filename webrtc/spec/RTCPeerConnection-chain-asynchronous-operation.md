@@ -1,5 +1,14 @@
 # Chain an asynchronous operation
 
+## 目录
+
+<!-- vim-markdown-toc GFM -->
+
+- [spec](#spec)
+- [pion/webrtc@v1.2.0的举例](#pionwebrtcv120的举例)
+
+<!-- vim-markdown-toc -->
+
 [链式异步操作](https://www.w3.org/TR/webrtc/#chain-an-asynchronous-operation)
 
 前面在讲pion/webrtc@v1.2.0的连接构造时提到了，

@@ -1,5 +1,21 @@
 # 设置sdp
 
+## 目录
+
+<!-- vim-markdown-toc GFM -->
+
+- [spec](#spec)
+- [pion/webrtc@v1.2.0 对设置sdp的处理](#pionwebrtcv120-对设置sdp的处理)
+  - [RTCPeerConnection中的4个sdp指针](#rtcpeerconnection中的4个sdp指针)
+  - [RTCPeerConnection中和sdp相关的处理方法](#rtcpeerconnection中和sdp相关的处理方法)
+    - [生成offer](#生成offer)
+  - [设置sdp的具体流程](#设置sdp的具体流程)
+  - [SetLocalDescription](#setlocaldescription)
+  - [SetRemoteDescription](#setremotedescription)
+- [最后](#最后)
+
+<!-- vim-markdown-toc -->
+
 [spec](https://www.w3.org/TR/webrtc/#set-the-rtcsessiondescription)
 
 ## spec

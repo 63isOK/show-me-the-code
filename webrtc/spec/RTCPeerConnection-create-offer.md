@@ -1,5 +1,15 @@
 # 创建offer
 
+## 目录
+
+<!-- vim-markdown-toc GFM -->
+
+- [spec](#spec)
+- [sdp offer/answer 处理(bundle复用后的协商处理)](#sdp-offeranswer-处理bundle复用后的协商处理)
+- [pion/webrtc@v1.2.0中创建offer的分析](#pionwebrtcv120中创建offer的分析)
+
+<!-- vim-markdown-toc -->
+
 RTCPeerConnection核心的部分是由几个异步操作组成，也就是对外暴露的几个异步操作。
 RTP媒体流的收发，现在由MediaStreamTrack对象来提供。当然这属于扩展接口。
 

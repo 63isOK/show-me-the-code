@@ -1,5 +1,17 @@
 # RTCPeerConnection相关操作
 
+## 目录
+
+<!-- vim-markdown-toc GFM -->
+
+- [构造函数](#构造函数)
+- [配置对象的servers信息](#配置对象的servers信息)
+- [RTCPeerConnection的4个状态信息](#rtcpeerconnection的4个状态信息)
+- [ice agent](#ice-agent)
+- [note, sdp协商状态](#note-sdp协商状态)
+
+<!-- vim-markdown-toc -->
+
 ## 构造函数
 
 要通过配置对象来生成一个RTCPeerConnection对象
