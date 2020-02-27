@@ -136,6 +136,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
 - 6 p2p数据接口
   - 6.2 [RTCDataChannel接口](/webrtc/v1.2.0-060.md)
   - 6.3 [RTCDataChannelEvent接口](/webrtc/v1.2.0-061.md)
+  - 6.4 [gc，垃圾回收](/webrtc/v1.2.0-062.md)
 - 7 p2p的DTMF(双音多频)
 - 8 统计模型
   - 8.5 [状态收集算法](/webrtc/v1.2.0-046.md)
