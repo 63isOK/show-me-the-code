@@ -145,9 +145,9 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 8.1 [统计模型的介绍](/webrtc/v1.2.0-066.md)
   - 8.2 [对RTCPeerConnection接口的扩展](/webrtc/v1.2.0-067.md)
   - 8.3 [RTCStatsReport接口](/webrtc/v1.2.0-068.md)
-  - 8.4 [RTCStats接口](/webrtc/v1.2.0-069.md)
+  - 8.4 [RTCStats接口](/webrtc/v1.2.0-068.md)
   - 8.5 [状态收集算法](/webrtc/v1.2.0-046.md)
-  - 8.6 [统计的实现](/webrtc/v1.2.0-070.md)
+  - 8.6 [统计的实现](/webrtc/v1.2.0-069.md)
 - 9 网络使用中，媒体流api的扩展
 - 10 例子和调用流程
 - 11 错误处理
