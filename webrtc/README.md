@@ -156,6 +156,9 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 10.4 [p2p data例子](/webrtc/v1.2.0-074.md)
   - 10.7 [完美协商例子](/webrtc/v1.2.0-075.md)
 - 11 错误处理
+  - 11.1 [RTCError接口](/webrtc/v1.2.0-076.md)
+  - 11.2 [RTCErrorDetailType枚举](/webrtc/v1.2.0-077.md)
+  - 11.3 [RTCErrorEvent接口](/webrtc/v1.2.0-078.md)
 - 12 事件汇总
 - 13 隐私和安全选项
 - 14 辅助功能
