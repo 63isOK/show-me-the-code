@@ -77,6 +77,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
     - webrtc 核心业务逻辑
       - [创建webrtc底层网络连接](/webrtc/v1.2.0-033.md)
       - [创建datachannel底层网络连接](/webrtc/v1.2.0-034.md)
+      - [RTCPeerConnection分析](/webrtc/v1.2.0-080.md)
   - 了解v1.2.0的[demo的整个框架](/webrtc/v1.2.0-024.md)
     - ~~[gs发送到浏览器](/webrtc/v1.2.0-025.md)~~
     - ~~[gs从浏览器接收](/webrtc/v1.2.0-026.md)~~
