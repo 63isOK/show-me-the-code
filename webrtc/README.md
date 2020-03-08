@@ -10,6 +10,8 @@
   - [v1.0.0](#v100)
   - [v1.1.0](#v110)
   - [v1.2.0](#v120)
+  - [v2.0.0](#v200)
+  - [v2.2.0](#v220)
 
 <!-- vim-markdown-toc -->
 
@@ -40,7 +42,7 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - 了解v1.0.0的[webrtc](/webrtc/v1.0.0-010.md),对外暴露了RTCPeerConnection
   - 了解v1.0.0的[demo](/webrtc/v1.0.0-011.md),因为dtls不是纯Go，就部分细demo了
 - 2018/11,发布v1.1.0,[发布说明](#v1.1.0)
-- 2019/04,发布v1.2.0,[发布说明](#v1.2.0)
+- 2018/12,发布v1.2.0,[发布说明](#v1.2.0)
   - 了解v1.2.0的[官方文档](/webrtc/v1.2.0-000.md)
   - 了解v1.2.0的[rtcerr](/webrtc/v1.2.0-001.md), 封装了webrtc的错误
   - 了解v1.2.0的[ice](/webrtc/v1.2.0-002.md),完整的ice连接协商过程，让调用方只关注实际数据的收发即可
@@ -86,6 +88,8 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
     - [中继](/webrtc/v1.2.0-029.md)
     - [datachannel传输](/webrtc/v1.2.0-030.md)
     - [datachannel和浏览器之间的传输](/webrtc/v1.2.0-031.md)
+- 2020/02,发布v2.2.0,[发布说明](#v2.2.0)
+  - 了解v2.2.0的[官方文档](/webrtc/v2.2.0-081.md)
 
 ## webrtc标准熟悉
 
@@ -194,3 +198,26 @@ pion/webrtc从2018/05开始创建，虽然年轻，但也发布了几十个relea
   - dtls用Go实现
   - srtp改进，并新增tag认证检查
   - rtcp的go-fuzz支持，(go-fuzz是一个随机测试)
+
+### v2.0.0
+
+- 第四个版本,也是改动非常多的一个版本
+  - ortc支持
+  - data channel优化
+  - 日志和ice调试
+  - 实验性的:quic/wasm支持
+  - api格式,向spec靠拢
+  - sctp的可读性提高
+  - ice常规提名
+
+### v2.2.0
+
+- 2020.02.17发布
+- 目前最近的一个版本
+  - data channel性能提升
+  - 为了更好的支持sfu,SettingEngine做了更多的扩展
+  - turn支持tcp
+  - 支持pcm
+  - 轨道的重新协商
+  - IVFReader解码器,纯go实现
+  - vp9支持
