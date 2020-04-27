@@ -52,7 +52,115 @@ gdamore/tcell的定位就类似于win32编程,要画点画线都用api,
 
 ## 基础用法
 
+tcell是基于类似二维坐标的概念设计的,画矩形比较容易,
+画椭圆就需要提前计算位置,下面主要以矩形举例.
+
 ### 画矩形
+
+    func draw(s tcell.Screen) {
+      w, h := s.Size()
+      if w == 0 || h == 0 {
+        return
+      }
+
+      data := genData(w, h)
+      c := '0'
+      for y := range data {
+        for x := range data[y] {
+          c = rune('0' + data[y][x]%10)
+          s.SetCell(x, y, char[data[y][x]%10], c)
+        }
+      }
+
+      s.Show()
+    }
+
+    func genData(w, h int) [][]int {
+      data := make([][]int, h)
+      for i := 0; i < h; i++ {
+        data[i] = make([]int, w)
+      }
+
+      for y := range data {
+        for x := range data[y] {
+          if x > y {
+            data[y][x] = x
+          } else {
+            data[y][x] = y
+          }
+        }
+      }
+
+      return data
+    }
+
+运行效果如下:
+[draw rectangle][rectangle]
+
+这个矩形设计的比较简单,从左上角开始,只绘制出来右边下边,
+从实现上看,更加简单,设计一个二维切片,其次对应每个cell,
+设置不同的属性(颜色和打印的数字),在画布的绘制中,
+只使用到了核心的tcell.SetCell().
+
+再看下除了画布操作的其他代码:
+
+    func main() {
+      encoding.Register()
+
+      s, e := tcell.NewScreen()
+      if e != nil {
+        fmt.Printf("%v\n", e)
+        os.Exit(1)
+      }
+
+      if e = s.Init(); e != nil {
+        fmt.Printf("%v\n", e)
+        os.Exit(1)
+      }
+
+      s.Clear()
+
+      quit := make(chan struct{})
+      go func() {
+        for {
+          event := s.PollEvent()
+          switch event := event.(type) {
+          case *tcell.EventKey:
+            switch event.Key() {
+            case tcell.KeyEscape:
+              close(quit)
+              return
+            }
+          case *tcell.EventResize:
+            draw(s)
+          }
+        }
+      }()
+
+      draw(s)
+
+      select {
+      case <-quit:
+        break
+      }
+
+      s.Fini()
+
+    }
+
+资源的申请/初始化/释放,事件捕获,基本上每个程序都会用上,
+所以上面的套路很常用,唯一变化大的就是画布绘制.
+
+分析一下基本套路:
+
+- encoding.Register() 注册tcell支持的字符编码格式
+- tcell.NewScreen() 构造一个终端屏幕对象
+  - Init()/Clear() 是初始化和清屏
+- for循环里的PollEvent() 是事件循环,可处理不同类型的事件
+  - tcell.EventKey 是键盘事件,这里可以对不同按键做处理
+- Fini() 是释放屏幕资源
+
+可以看出,除了那些固定的写法,重要的工作就是在画布上创作.
 
 ### 键盘事件的支持
 
@@ -75,3 +183,5 @@ gdamore/tcell的定位就类似于win32编程,要画点画线都用api,
 [tcell]: /tcell/summary/tcell.PNG
 [draw]: /tcell/summary/draw.PNG
 [gowid]: https://github.com/gcla/gowid
+[rectangle]: /tcell/summary/rectangle.PNG
+
