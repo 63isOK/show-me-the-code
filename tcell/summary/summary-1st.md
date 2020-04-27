@@ -41,5 +41,37 @@ gdamore/tcell从2015年到现在,一直都比较活跃,2100+星星,
 这个合适的时候,可能是系统发来的sigwinch信号,
 也可能是键盘鼠标事件,也可能是业务上的触发.
 
+以上就是gdamore/tcell的核心认识.
+听起来和windows上的win32 api做界面编程类似,没错,
+他们都是在画布上绘制,之后将画布渲染到屏幕上,
+gdamore/tcell的定位就类似于win32编程,要画点画线都用api,
+如果觉得麻烦,还可以使用将api封装好的控件库,
+就如win32的mfc,gdamore/tcell也有[gcla/gowid][gowid].
+
+明白了gdamore/tcell的定位,那看看基础功能是如何完成的.
+
+## 基础用法
+
+### 画矩形
+
+### 键盘事件的支持
+
+### 鼠标支持
+
+### CJK支持
+
+## 一些套路
+
+### resize支持
+
+### 固定写法
+
+### 层次设计
+
+### 背景色还原
+
+## 最后
+
 [tcell]: /tcell/summary/tcell.PNG
 [draw]: /tcell/summary/draw.PNG
+[gowid]: https://github.com/gcla/gowid
