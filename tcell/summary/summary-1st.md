@@ -1,0 +1,186 @@
+# 终端界面开发框架- gdamore/tcell
+
+![demo例子][tcell]
+
+在开发终端(命令行)app时,经常会遇到需要用一个简易UI来做呈现,
+如果需求不高,可直接使用输入输出来进行交互,
+有时候,需求正好超出输入输出范围,处理起来就比较麻烦了:
+专门做一个应用程序ui显得太繁琐,自己在终端处理,
+难免有考虑不周的情况,考虑周全了,还不如做一个应用程序ui.
+那有没有基于终端,开源又跨平台的基础绘制框架?
+既将底层绘制渲染功能封装起来,又能提供所必需的ui设计方法.
+还真有不少,今天只主要介绍一种.
+
+今天介绍的主角gdamore/tcell,是一个Go库,
+在终端中可以用可视化文本来提供渲染;
+底层支持各种终端(真实终端或模拟终端);
+跨平台支持广泛(针对不同系统的流行终端都有支持);
+没有使用异步io(sigio),而是利用Go的信道来完成,
+这样减少了意料之外的情况发生的概率;
+对unicode和非unicode都做了很高的支持;
+组合按键捕获支持丰富;颜色种类支持真彩和16/8位;
+鼠标支持;对其他同类开源项目的兼容(如果是termbox就可以直接替换).
+
+在性能方面,尽可能少地重绘不变的部分,尽可能少地向终端发送数据.
+
+gdamore/tcell从2015年到现在,一直都比较活跃,2100+星星,
+下面着重介绍一下gdamore/tcell项目本身.
+
+## 重要元素
+
+![渲染的主要逻辑][draw]
+
+上图就是tcell进行渲染的主流程,
+会有一个终端屏幕Screen来匹配各种终端或模拟终端,
+会有一个CellBuffer来充当画布,是一个w x h 的点,
+对应终端屏幕的二维坐标,画布中的每个点都可用来打印字符,
+并设置字符的相关属性(颜色,粗体,表情符号),
+调用方(也就是使用tcell的开发者)更多是完成画布的创作,
+在合适的时候,将画布渲染到屏幕上.
+
+这个合适的时候,可能是系统发来的sigwinch信号,
+也可能是键盘鼠标事件,也可能是业务上的触发.
+
+以上就是gdamore/tcell的核心认识.
+听起来和windows上的win32 api做界面编程类似,没错,
+他们都是在画布上绘制,之后将画布渲染到屏幕上,
+gdamore/tcell的定位就类似于win32编程,要画点画线都用api,
+如果觉得麻烦,还可以使用将api封装好的控件库,
+就如win32的mfc,gdamore/tcell也有[gcla/gowid][gowid].
+
+明白了gdamore/tcell的定位,那看看基础功能是如何完成的.
+
+## 基础用法
+
+tcell是基于类似二维坐标的概念设计的,画矩形比较容易,
+画椭圆就需要提前计算位置,下面主要以矩形举例.
+
+### 画矩形
+
+    func draw(s tcell.Screen) {
+      w, h := s.Size()
+      if w == 0 || h == 0 {
+        return
+      }
+
+      data := genData(w, h)
+      c := '0'
+      for y := range data {
+        for x := range data[y] {
+          c = rune('0' + data[y][x]%10)
+          s.SetCell(x, y, char[data[y][x]%10], c)
+        }
+      }
+
+      s.Show()
+    }
+
+    func genData(w, h int) [][]int {
+      data := make([][]int, h)
+      for i := 0; i < h; i++ {
+        data[i] = make([]int, w)
+      }
+
+      for y := range data {
+        for x := range data[y] {
+          if x > y {
+            data[y][x] = x
+          } else {
+            data[y][x] = y
+          }
+        }
+      }
+
+      return data
+    }
+
+运行效果如下:
+[draw rectangle][rectangle]
+
+这个矩形设计的比较简单,从左上角开始,只绘制出来右边下边,
+从实现上看,更加简单,设计一个二维切片,其次对应每个cell,
+设置不同的属性(颜色和打印的数字),在画布的绘制中,
+只使用到了核心的tcell.SetCell().
+
+再看下除了画布操作的其他代码:
+
+    func main() {
+      encoding.Register()
+
+      s, e := tcell.NewScreen()
+      if e != nil {
+        fmt.Printf("%v\n", e)
+        os.Exit(1)
+      }
+
+      if e = s.Init(); e != nil {
+        fmt.Printf("%v\n", e)
+        os.Exit(1)
+      }
+
+      s.Clear()
+
+      quit := make(chan struct{})
+      go func() {
+        for {
+          event := s.PollEvent()
+          switch event := event.(type) {
+          case *tcell.EventKey:
+            switch event.Key() {
+            case tcell.KeyEscape:
+              close(quit)
+              return
+            }
+          case *tcell.EventResize:
+            draw(s)
+          }
+        }
+      }()
+
+      draw(s)
+
+      select {
+      case <-quit:
+        break
+      }
+
+      s.Fini()
+
+    }
+
+资源的申请/初始化/释放,事件捕获,基本上每个程序都会用上,
+所以上面的套路很常用,唯一变化大的就是画布绘制.
+
+分析一下基本套路:
+
+- encoding.Register() 注册tcell支持的字符编码格式
+- tcell.NewScreen() 构造一个终端屏幕对象
+  - Init()/Clear() 是初始化和清屏
+- for循环里的PollEvent() 是事件循环,可处理不同类型的事件
+  - tcell.EventKey 是键盘事件,这里可以对不同按键做处理
+- Fini() 是释放屏幕资源
+
+可以看出,除了那些固定的写法,重要的工作就是在画布上创作.
+
+### 键盘事件的支持
+
+### 鼠标支持
+
+### CJK支持
+
+## 一些套路
+
+### resize支持
+
+### 固定写法
+
+### 层次设计
+
+### 背景色还原
+
+## 最后
+
+[tcell]: /tcell/summary/tcell.PNG
+[draw]: /tcell/summary/draw.PNG
+[gowid]: https://github.com/gcla/gowid
+[rectangle]: /tcell/summary/rectangle.PNG
