@@ -184,4 +184,3 @@ tcell是基于类似二维坐标的概念设计的,画矩形比较容易,
 [draw]: /tcell/summary/draw.PNG
 [gowid]: https://github.com/gcla/gowid
 [rectangle]: /tcell/summary/rectangle.PNG
-
