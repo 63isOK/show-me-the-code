@@ -35,6 +35,11 @@ WebRTC media server for go.
 - [source](https://github.com/gdamore/tcell)
 - [enjoy](/tcell/README.md)
 
+## fyne
+
+go界面库,[fyne](https://fyne.io/).  
+[分析](/fyne/README.md)
+
 ## my oss
 
 open source sprit
